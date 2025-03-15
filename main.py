@@ -12,6 +12,7 @@ chat_history = []
 @app.post("/chat")
 async def chat_endpoint(chat_message: ChatMessage):
     chat_history.append({"role": "user", "content": chat_message.message})
+    print(chat_history)
     response = await get_response(chat_message.message, chat_history)
     chat_history.append({"role": "assistant", "content": response})
     return {"response": response}

@@ -43,6 +43,12 @@ def get_order_status(order_id: str) -> str:
         return f"Database error occurred: {str(e)}"
     except Exception as e:
         return f"An error occurred while checking order status: {str(e)}"
+    
+@function_tool
+
+def request_callback(email_id: str) -> str:
+
+    return "A call request has been assigned to customer support agent, they will reach you on 24 hrs"
 
 def create_database():
     conn = sqlite3.connect('orders.db')
@@ -84,13 +90,15 @@ def create_database():
     conn.close()
 
 agent = Agent(
-    name="Customer Support",
-    instructions="You are a customer support agent which currently has the ability to check the status of an order based on the order id.",
-    tools=[get_order_status],
+    name="Customer Support Agent",
+    instructions="As a customer support agent, you can check the status of an order using the order ID. If a customer requests a callback, prompt them for their email address and utilize the request_callback tool to schedule a call with a customer support agent.",
+    tools=[get_order_status, request_callback],
 )
 
 async def get_response(message: str, chat_history: list[dict]) -> str:
-    result = await Runner.run(agent, input=message, context=chat_history) #type: ignore
+    print(chat_history)
+    message="current message is "+message + " and the chat history is "+str(chat_history)
+    result = await Runner.run(agent, input=message) #type: ignore
     return result.final_output
 
 async def main():
