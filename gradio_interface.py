@@ -29,7 +29,8 @@ demo = gr.ChatInterface(
     fn=chat_response,
     examples=["What is my order status?"],
     title="Customer Support Agent Chatbot",
-    description="Ask any support-related questions(only supports order status check for now)"
+    description="Ask any support-related questions(only supports order status check for now)",
+    save_history=True
 )
 
 if __name__ == "__main__":
