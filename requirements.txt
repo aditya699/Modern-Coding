@@ -1,0 +1,7 @@
+openai
+gradio
+fastapi
+uvicorn
+jupyter
+openai-agents
+python-dotenv
